@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="74901162-2695-4a1d-ab5c-98dc857580ce" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="database-dev-branchFlow" doc:id="aa9648d4-d722-4db3-ac3b-5c1fc3f9512d" >
+		<http:listener doc:name="Listener" doc:id="09760af8-ceda-4293-9d90-50ce1d1406f9" config-ref="HTTP_Listener_config" path="/api"/>
+		<logger level="INFO" doc:name="Logger" doc:id="614424c5-b8f3-49e7-b119-b63ff6433ff5" message="flow started"/>
+		<ee:transform doc:name="Transform Message" doc:id="373f9954-f138-44d5-b0d2-17cd6d8ce5cc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{ "message": "response for git hub"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
